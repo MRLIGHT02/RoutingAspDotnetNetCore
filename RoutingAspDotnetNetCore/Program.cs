@@ -3,15 +3,16 @@ var app = builder.Build();
 
 // GetEndPointMethod
 
+
+// enable routing
+app.UseRouting();
 app.Use(async (context, next) =>
+
 {
 
     Microsoft.AspNetCore.Http.Endpoint endpoint = context.GetEndpoint();
     await next(context);
 });
-
-// enable routing
-app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     // add your own endpoint
@@ -22,9 +23,11 @@ app.UseEndpoints(endpoints =>
     endpoints.Map("map2", async (context) =>
     {
         await context.Response.WriteAsync("Welcome to Map 2");
+
     });
 
 });
+
 
 //app.Map("map1", async(HttpContext context) =>
 //{
