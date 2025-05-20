@@ -4,10 +4,10 @@ var app = builder.Build();
 app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
-    endpoints.Map("/map1", async (HttpContext context, RequestDelegate next) =>
+    endpoints.Map("/map1", async (context) =>
     {
         await context.Response.WriteAsync("hello world");
-        await next(context);
+
     });
 
 });
