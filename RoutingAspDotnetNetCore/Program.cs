@@ -6,24 +6,12 @@ var app = builder.Build();
 
 // enable routing
 app.UseRouting();
-app.Use(async (context, next) =>
 
-{
-
-    Microsoft.AspNetCore.Http.Endpoint endpoint = context.GetEndpoint();
-    await next(context);
-});
 app.UseEndpoints(endpoints =>
 {
-    // add your own endpoint
-    endpoints.Map("map1", async (context) =>
+    endpoints.Map("files/{filename}.{extension}", async context =>
     {
-        await context.Response.WriteAsync("Map 1");
-    });
-    endpoints.Map("map2", async (context) =>
-    {
-        await context.Response.WriteAsync("Welcome to Map 2");
-
+        await context.Response.WriteAsync("In files");
     });
 
 });
@@ -33,6 +21,10 @@ app.UseEndpoints(endpoints =>
 //{
 //    await context.Response.WriteAsync("Welcom to Map 1");
 //});
+app.Run(async context =>
+{
+    await context.Response.WriteAsync($"Request recieved  at {context.Request.Path}");
+});
 app.MapGet("/", () => "Hello World!");
 
 app.Run();
