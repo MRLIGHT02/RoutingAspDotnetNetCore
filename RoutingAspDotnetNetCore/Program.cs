@@ -9,7 +9,13 @@ app.UseRouting();
 
 app.UseEndpoints(endpoints =>
 {
-
+    // adding my endpoint
+    endpoints.Map("file/data/{filename}.{extension}", async (context) =>
+    {
+        string? filename = Convert.ToString(context.Request.RouteValues["filename"]);
+        string? extension = Convert.ToString(context.Request.RouteValues["extension"]);
+        await context.Response.WriteAsync("Welecome to file 1 :"+filename+"."+extension);
+    });
 
 });
 
