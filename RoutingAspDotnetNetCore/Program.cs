@@ -3,7 +3,7 @@ using RoutingAspDotnetNetCore.CustomConstrains;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options =>
 {
-    options.ConstraintMap.Add("MyCustomConstrain"
+    options.ConstraintMap.Add("months"
     , typeof(MyCustomConstrain));
 });
 var app = builder.Build();
@@ -24,10 +24,10 @@ app.UseEndpoints(endpoints =>
     });
 
     // passing default Value in route parameter
-    endpoints.Map("file/emp/{filenamedata:alpha?:minlength(3)=harsha}", async (context) =>
+    endpoints.Map("sales-report/{year:int:min(1900)}/{month:months}", async (context) =>
     {
-        string? filenamedata = Convert.ToString(context.Request.RouteValues["filenamedata"]);
-        await context.Response.WriteAsync("Welcome to file: " + filenamedata);
+        string? month = Convert.ToString(context.Request.RouteValues["month"]);
+        await context.Response.WriteAsync("Welcome to file: " + month);
 
     });
 
@@ -35,6 +35,11 @@ app.UseEndpoints(endpoints =>
     {
         DateTime report = Convert.ToDateTime(context.Request.RouteValues["report"]);
         await context.Response.WriteAsync($"hello mr datetime {report}");
+    });
+
+    endpoints.Map("sales-report/2024/jan", async (context) =>
+    {
+        await context.Response.WriteAsync("sales report 2024 jan only");
     });
 
 });
