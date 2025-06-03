@@ -1,11 +1,15 @@
 using RoutingAspDotnetNetCore.CustomConstrains;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRouting(options =>
+{
+    options.ConstraintMap.Add("MyCustomConstrain"
+    , typeof(MyCustomConstrain));
+});
 var app = builder.Build();
 
 // GetEndPointMethod
 
-builder.Services.AddRouting(options => options.ConstraintMap.Add("MyCustomConstrain", typeof(MyCustomConstrain)));
 // enable routing
 app.UseRouting();
 
